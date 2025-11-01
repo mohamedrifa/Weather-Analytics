@@ -1,29 +1,23 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import Dashboard from './components/Dashboard';
+import React, { Suspense, lazy } from "react";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CityDetails from "./components/CityDetails";
 
-
-function AppRoot() {
-  return (
-    <Provider store={store}>
-      <div style={{ minHeight: '100vh', background: '#f7f7f9' }}>
-        <Dashboard />
-      </div>
-    </Provider>
-  );
-}
+const Dashboard = lazy(() => import("./components/Dashboard"));
+const CityDetails = lazy(() => import("./components/CityDetails"));
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AppRoot />} />
-        <Route path="/city/:lat/:lon" element={<CityDetails />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Suspense fallback={<div className="text-center p-10">Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/city/:lat/:lon" element={<CityDetails />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

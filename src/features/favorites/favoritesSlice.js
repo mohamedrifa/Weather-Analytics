@@ -1,7 +1,7 @@
 // src/features/favorites/favoritesSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const STORAGE_KEY = 'fav_cities_v1';
+const STORAGE_KEY = 'favorites';
 const initial = {
   cities: JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'), // [{name, lat, lon, country}]
 };

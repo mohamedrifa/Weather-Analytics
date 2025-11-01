@@ -21,7 +21,6 @@ export default function Dashboard() {
   const cities = useSelector((s) => s.weather.cities);
   const favorites = useSelector((s) => s.weather.favorites);
   const unit = useSelector((s) => s.weather.unit);
-  const suggestionCities = useSelector((s) => s.weather.cities);
 
 
   const [showTracked, setShowTracked] = useState(false);
