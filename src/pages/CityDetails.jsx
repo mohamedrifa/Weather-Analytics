@@ -1,13 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import TempTrendChart from "../components/charts/TempTrendChart";
-import PrecipChart from "../components/charts/PrecipChart";
-import WindChart from "../components/charts/WindChart";
+import TempTrendChart from "../components/citydetails/TempTrendChart";
+import PrecipChart from "../components/citydetails/PrecipChart";
+import WindChart from "../components/citydetails/WindChart";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavorite, removeFavorite } from "../features/favorites/favoritesSlice";
 import Loader from "../components/Loader";
 import { getWeatherIcon } from "../utils/weatherIcons";
-import MetricButton from "../components/MetricButton";
 
 
 export default function CityDetails() {
