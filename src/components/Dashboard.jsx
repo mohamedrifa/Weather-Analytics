@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchWeather, setUnit } from "../features/weather/weatherSlice";
 import SearchBar from "./SearchBar";
 import CityCard from "./CityCard";
+import MetricButton from "./MetricButton";
 
 const defaultSuggestions = [
   { name: "London", lat: 51.5074, lon: -0.1278 },
@@ -80,24 +81,12 @@ export default function Dashboard() {
     setShowTracked(true);
   }
 
-  function toggleUnit() {
-    const newUnit = unit === "metric" ? "imperial" : "metric";
-    dispatch(setUnit(newUnit));
-    localStorage.setItem("unit", newUnit);
-
-    cities.forEach((c) => {
-      dispatch(fetchWeather({ lat: c.lat, lon: c.lon, unit: newUnit }));
-    });
-  }
-
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-white">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">🌤 Weather Dashboard</h1>
 
-        <button onClick={toggleUnit} className="px-4 py-2 bg-blue-500 rounded">
-          {unit === "metric" ? "Switch to °F" : "Switch to °C"}
-        </button>
+        <MetricButton cities={cities}/>
       </div>
 
       <div className="mb-6 max-w-md">
@@ -106,7 +95,7 @@ export default function Dashboard() {
 
       {favorites.length > 0 && (
         <>
-          <h2 className="text-xl font-semibold mb-2">Favorite Cities</h2>
+          <h2 className="text-xl font-semibold mb-2">⭐ Favorite Cities</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {cities
               .filter((c) =>
@@ -126,7 +115,7 @@ export default function Dashboard() {
             .filter((c) => !favorites.some((f) => f.lat === c.lat && f.lon === c.lon));
           return trackedList.length > 0 ? (
             <>
-              <h2 className="text-xl font-semibold mb-2">Tracked Cities</h2>
+              <h2 className="text-xl font-semibold mb-2">📍 Tracked Cities</h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {trackedList.map((c) => (
                   <CityCard key={`${c.lat},${c.lon}`} city={c} />
