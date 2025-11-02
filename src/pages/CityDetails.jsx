@@ -5,9 +5,9 @@ import PrecipChart from "../components/charts/PrecipChart";
 import WindChart from "../components/charts/WindChart";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavorite, removeFavorite } from "../features/favorites/favoritesSlice";
-import Loader from "./Loader";
+import Loader from "../components/Loader";
 import { getWeatherIcon } from "../utils/weatherIcons";
-import MetricButton from "./MetricButton";
+import MetricButton from "../components/MetricButton";
 
 
 export default function CityDetails() {

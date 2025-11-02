@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchCity } from "../api/weatherService";
+import { searchCity } from "../../api/weatherService";
 
 export default function SearchBar({ onSelect }) {
   const [q, setQ] = useState("");

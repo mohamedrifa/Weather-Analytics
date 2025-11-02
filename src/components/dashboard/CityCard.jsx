@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFavorite } from "../features/weather/weatherSlice";
+import { toggleFavorite } from "../../features/weather/weatherSlice";
 import { useNavigate } from "react-router-dom";
-import { getWeatherIcon } from "../utils/weatherIcons";
+import { getWeatherIcon } from "../../utils/weatherIcons";
 
 export default function CityCard({ city }) {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchWeather, setUnit } from "../features/weather/weatherSlice";
+import { fetchWeather, setUnit } from "../../features/weather/weatherSlice";
 
 export default function MetricButton({ cities }) {
   const dispatch = useDispatch();

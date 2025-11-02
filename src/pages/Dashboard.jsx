@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchWeather, setUnit } from "../features/weather/weatherSlice";
 import { useRef } from "react";
-import SearchBar from "./SearchBar";
-import CityCard from "./CityCard";
-import MetricButton from "./MetricButton";
+import SearchBar from "../components/dashboard/SearchBar";
+import CityCard from "../components/dashboard/CityCard";
+import MetricButton from "../components/dashboard/MetricButton";
 
 const defaultSuggestions = [
   { name: "London", lat: 51.5074, lon: -0.1278 },
