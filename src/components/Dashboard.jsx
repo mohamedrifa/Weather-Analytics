@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchWeather, setUnit } from "../features/weather/weatherSlice";
+import { useRef } from "react";
 import SearchBar from "./SearchBar";
 import CityCard from "./CityCard";
 import MetricButton from "./MetricButton";
@@ -22,7 +23,7 @@ export default function Dashboard() {
   const cities = useSelector((s) => s.weather.cities);
   const favorites = useSelector((s) => s.weather.favorites);
   const unit = useSelector((s) => s.weather.unit);
-
+  const favScrollRef = useRef(null);
 
   const [showTracked, setShowTracked] = useState(false);
 
@@ -71,6 +72,25 @@ export default function Dashboard() {
     });
   }, [dispatch, favorites, unit]);
 
+  useEffect(() => {
+    const container = favScrollRef.current;
+    if (!container || window.innerWidth >= 640) return; 
+    const cardWidth = container.children[0]?.offsetWidth;
+    let index = 0;
+    const autoScroll = setInterval(() => {
+      if (!container.children.length) return;
+      index = (index + 1) % container.children.length;
+      container.scrollTo({
+        left: index * cardWidth,
+        behavior: "smooth",
+      });
+    }, 3000);
+    return () => clearInterval(autoScroll);
+  }, []);
+
+
+
+
   function handleSelectCity(c) {
     dispatch(fetchWeather({ lat: c.lat, lon: c.lon, unit }));
 
@@ -96,17 +116,36 @@ export default function Dashboard() {
       {favorites.length > 0 && (
         <>
           <h2 className="text-xl font-semibold mb-2">⭐ Favorite Cities</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div
+            ref={favScrollRef}
+            className="
+              flex overflow-x-auto gap-4 mb-8
+              snap-x snap-mandatory
+              sm:grid sm:grid-cols-2 lg:grid-cols-3 
+              sm:overflow-visible
+              scrollbar-hide
+            "
+          >
             {cities
               .filter((c) =>
                 favorites.some((f) => f.lat === c.lat && f.lon === c.lon)
               )
               .map((c) => (
-                <CityCard key={`${c.lat},${c.lon}`} city={c} />
+                <div
+                  key={`${c.lat},${c.lon}`}
+                  className="
+                    min-w-full 
+                    snap-center
+                    sm:min-w-0
+                  "
+                >
+                  <CityCard city={c} />
+                </div>
               ))}
           </div>
         </>
       )}
+
 
       {showTracked ? (
         (() => {
